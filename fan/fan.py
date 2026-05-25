@@ -11,6 +11,17 @@ class Fan:
         radius: {self.__radius} \
         color: {self.__color} \
         on: {self.__on}"
+    
+    def get_speed(self):
+        return self.__speed
+    
+    def set_speed(self, value):
+        if value == 1 or 2 or 3:
+            self.__speed: int = value
+        else:
+            print("Invalid input: options are 1, 2, or 3")
 
 fan = Fan()
 print(fan)
+fan.set_speed(2)
+print(fan.get_speed())
