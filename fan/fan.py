@@ -40,17 +40,16 @@ class Fan:
             self.__color = color
         else:
             print("Invalid input: must be a color")
+
+    def get_on(self):
+        return self.__on
     
-
-
-fan = Fan()
-print(fan)
-
-fan.set_speed(2)
-print(fan.get_speed())
-
-fan.set_radius(20)
-print(fan.get_radius())
-
-fan.set_color("red")
-print(fan.get_color())
+    def set_on(self, status):
+        if status == True or status == False:
+            self.__on = status
+        elif str(status).lower() == "true":
+            self.__on = True
+        elif str(status).lower() == "false":
+            self.__on = False
+        else:
+            print("Invalid input: must only be True or False")
