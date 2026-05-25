@@ -8,9 +8,9 @@ class Fan:
     
     def __str__(self):
         return f"speed: {self.__speed} \
-        radius: {self.__radius} \
-        color: {self.__color} \
-        on: {self.__on}"
+                 radius: {self.__radius} \
+                 color: {self.__color} \
+                 on: {self.__on}"
     
     def get_speed(self):
         return self.__speed
@@ -27,13 +27,30 @@ class Fan:
     def set_radius(self, radius):
         if 0 < radius:
             self.__radius = radius
+        elif radius < 0:
+            print("Invalid Input: Fan's radius can't be negative")
+        else:
+            print("Invalid Input: must be a number")
+    
+    def get_color(self):
+        return self.__color
+    
+    def set_color(self, color):
+        if str(color).isalpha():
+            self.__color = color
+        else:
+            print("Invalid input: must be a color")
     
 
 
 fan = Fan()
 print(fan)
+
 fan.set_speed(2)
 print(fan.get_speed())
 
 fan.set_radius(20)
 print(fan.get_radius())
+
+fan.set_color("red")
+print(fan.get_color())
