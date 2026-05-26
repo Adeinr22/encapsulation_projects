@@ -16,3 +16,10 @@ class Car:
     def get_speed(self):
         return self.__speed
         
+wigo = Car(2020, "Toyota")
+for acc in range(5):
+    wigo.accelerate()
+    print(wigo.get_speed())
+for brk in range(5):
+    wigo.brake()
+    print(wigo.get_speed())
