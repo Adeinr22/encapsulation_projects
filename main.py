@@ -38,7 +38,4 @@ def create_object(class_choice):
             except ValueError:
                 print("invalid input. try again")
     else:
-        pass
-
-object_1 = create_object("pet")
-print(object_1)
+        return f"no class named '{class_choice}'"
