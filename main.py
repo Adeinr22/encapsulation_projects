@@ -23,13 +23,22 @@ def create_object(class_choice):
     elif class_choice.lower() == "car":
         while True:
             try:
-                year_model: int = input("car year model: ")
+                year_model: int = int(input("car year model: "))
                 make: str = input("make: ")
                 return Car(year_model, make)
+            except ValueError:
+                print("invalid input. try again")
+    elif class_choice.lower() == "pet":
+        while True:
+            try:
+                name: str = input("pet name: ")
+                animal_type: str = input("pet animal type: ")
+                age: float = float(input("pet age: "))
+                return Pet(name, animal_type, age)
             except ValueError:
                 print("invalid input. try again")
     else:
         pass
 
-object_1 = create_object("car")
+object_1 = create_object("pet")
 print(object_1)

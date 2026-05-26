@@ -3,6 +3,9 @@ class Pet:
         self.__name = name
         self.__animal_type = animal_type
         self.__age = age
+
+    def __str__(self):
+        return f"name: {self.__name} | animal type: {self.__animal_type} | age: {self.__age}"
     
     def set_name(self, name):
         self.__name = name
