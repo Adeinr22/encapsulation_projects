@@ -5,12 +5,13 @@ class Fan:
         self.__radius: float = radius
         self.__color: str = color
         self.__on: bool = on  
-    
+
     def __str__(self):
-        return f"speed: {self.__speed} \
-                 radius: {self.__radius} \
-                 color: {self.__color} \
-                 on: {self.__on}"
+        return f"""
+        speed: {self.__speed}
+        radius: {self.__radius}
+        color: {self.__color}
+        on: {self.__on}"""
     
     def get_speed(self):
         return self.__speed
