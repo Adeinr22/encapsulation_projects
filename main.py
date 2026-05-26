@@ -37,5 +37,45 @@ def create_object(class_choice):
                 return Pet(name, animal_type, age)
             except ValueError:
                 print("invalid input. try again")
+
+def menu():
+    menu = input("""
+    Pick action:
+    (1) Create object
+    (0) Quit
+        
+    --> """)
+    if menu == "1":
+        return 1
+    elif menu == "0":
+        return 0
+    else:
+        pass
+
+def menu_choice_1():
+    class_choice = input("""
+    which class you want to make an object with?
+      classes:
+        Fan
+        Car
+        Pet
+    ==> """)
+    if class_choice.lower() == "fan":
+        return create_object("fan")
+    elif class_choice.lower() == "car":
+        return create_object("car")
+    elif class_choice.lower() == "pet":
+        return create_object("pet")
     else:
         return f"no class named '{class_choice}'"
+    
+
+run = True
+
+while run:
+    menu_choice = menu()
+    if menu_choice == 1:
+        object = menu_choice_1()
+        print(object)
+    if menu_choice == 0:
+        run = False
