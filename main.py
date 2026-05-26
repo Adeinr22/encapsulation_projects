@@ -1,6 +1,7 @@
 from fan.fan import Fan
 from car.car import Car
 from pet.pet import Pet
+import pandas as pd
 
 def create_object(class_choice):
     if class_choice.lower() == "fan":
@@ -17,7 +18,9 @@ def create_object(class_choice):
                 else:
                     on: bool = False
                     print("invalid input. will stay off")
-                return Fan(speed, radius, color, on)
+                object_holder = Fan(speed, radius, color, on)
+                return [object_holder.get_speed(), object_holder.get_radius(),
+                        object_holder.get_color(), object_holder.get_on()]
             except ValueError:
                 print("invalid input. try again")
     elif class_choice.lower() == "car":
@@ -25,7 +28,8 @@ def create_object(class_choice):
             try:
                 year_model: int = int(input("car year model: "))
                 make: str = input("make: ")
-                return Car(year_model, make)
+                object_holder = Car(year_model, make)
+                return [object_holder.get_year_model(), object_holder.get_make()]
             except ValueError:
                 print("invalid input. try again")
     elif class_choice.lower() == "pet":
@@ -34,7 +38,9 @@ def create_object(class_choice):
                 name: str = input("pet name: ")
                 animal_type: str = input("pet animal type: ")
                 age: float = float(input("pet age: "))
-                return Pet(name, animal_type, age)
+                object_holder = Pet(name, animal_type, age)
+                return [object_holder.get_name(), object_holder.get_animal_type(),
+                        object_holder.get_age()]
             except ValueError:
                 print("invalid input. try again")
 
@@ -54,6 +60,36 @@ def name_object():
             print("object name must not have speacial characters")
         else:
             return object_name
+        
+def store_object(class_name, object_name, values):
+    if class_name.lower() == "fan":
+        fan_values = {"speed": values[0], "radius": values[1], 
+                      "color": values[2], "on": values[3]}
+        fan_objects_values.append(fan_values)
+        fan_objects_names.append(object_name)
+    elif class_name.lower() == "car":
+        car_values = {"year model": values[0], "make": values[1]}
+        car_objects_values.append(car_values)
+        car_objects_names.append(object_name)
+    elif class_name.lower() == "pet":
+        pet_values = {"name": values[0], "animal type": values[1], 
+                      "age": values[2]}
+        pet_objects_values.append(pet_values)
+        pet_objects_names.append(object_name)
+
+def objects_dataframe(class_name):
+    if class_name.lower() == "fan":
+        fan_dataframe = pd.DataFrame(fan_objects_values)
+        fan_dataframe.index = fan_objects_names
+        return fan_dataframe
+    elif class_name.lower() == "car":
+        car_dataframe = pd.DataFrame(car_objects_values)
+        car_dataframe.index = car_objects_names
+        return car_dataframe
+    elif class_name.lower() == "pet":
+        pet_dataframe = pd.DataFrame(pet_objects_values)
+        pet_dataframe.index = pet_objects_names
+        return pet_dataframe
 
 def menu():
     menu = input("""
@@ -69,31 +105,52 @@ def menu():
     else:
         pass
 
-def menu_choice_1():
-    class_choice = input("""
+def class_choice():
+    while True:
+        class_choice = input("""
     which class you want to make an object with?
-      classes:
+    classes:
         Fan
         Car
         Pet
     ==> """)
-    if class_choice.lower() == "fan":
+        if class_choice.lower() == "fan":
+            return "fan"
+        elif class_choice.lower() == "car":
+            return "car"
+        elif class_choice.lower() == "pet":
+            return "pet"
+        else:
+            print(f"no class named '{class_choice}'")
+
+def class_runner(class_name):
+    if class_name.lower() == "fan":
         return create_object("fan")
-    elif class_choice.lower() == "car":
+    elif class_name.lower() == "car":
         return create_object("car")
-    elif class_choice.lower() == "pet":
+    elif class_name.lower() == "pet":
         return create_object("pet")
     else:
-        return f"no class named '{class_choice}'"
-    
+        print(f"no class named '{class_choice}'")
+
+fan_objects_values = []
+fan_objects_names = []
+
+car_objects_values = []
+car_objects_names = []
+
+pet_objects_values = []
+pet_objects_names = []
 
 run = True
 
 while run:
     menu_choice = menu()
     if menu_choice == 1:
-        object_values = menu_choice_1()
+        class_name = class_choice()
         object_name = name_object()
-        print(object_name)
+        object_values = class_runner(class_name)
+        store_object(class_name, object_name, object_values)
+        print(objects_dataframe(class_name))
     if menu_choice == 0:
         run = False
