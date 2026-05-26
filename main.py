@@ -63,17 +63,17 @@ def name_object():
         
 def store_object(class_name, object_name, values):
     if class_name.lower() == "fan":
-        fan_values = {"speed": values[0], "radius": values[1], 
-                      "color": values[2], "on": values[3]}
+        fan_values = {"SPEED": values[0], "RADIUS": values[1], 
+                      "COLOR": values[2], "ON": values[3]}
         fan_objects_values.append(fan_values)
         fan_objects_names.append(object_name)
     elif class_name.lower() == "car":
-        car_values = {"year model": values[0], "make": values[1]}
+        car_values = {"YEAR-MODEL": values[0], "MAKE": values[1]}
         car_objects_values.append(car_values)
         car_objects_names.append(object_name)
     elif class_name.lower() == "pet":
-        pet_values = {"name": values[0], "animal type": values[1], 
-                      "age": values[2]}
+        pet_values = {"NAME": values[0], "ANIMAL-TYPE": values[1], 
+                      "AGE": values[2]}
         pet_objects_values.append(pet_values)
         pet_objects_names.append(object_name)
 
@@ -92,14 +92,18 @@ def objects_dataframe(class_name):
         return pet_dataframe
 
 def menu():
-    menu = input("""
-    Pick action:
-    (1) Create object
-    (0) Quit
-        
-    --> """)
+    print("=" * 70)
+    print("Pick action: ")
+    print("  (1) Create object")
+    print("  (2) Display all objects")
+    print("  (0) Quit")
+    print("-" * 70)
+    menu = input("==> ")
+    print("=" * 70)
     if menu == "1":
         return 1
+    elif menu == "2":
+        return 2
     elif menu == "0":
         return 0
     else:
@@ -107,13 +111,11 @@ def menu():
 
 def class_choice():
     while True:
-        class_choice = input("""
-    which class you want to make an object with?
-    classes:
-        Fan
-        Car
-        Pet
-    ==> """)
+        print("which class you want to interact with?")
+        print("classes:\n  Fan\n  Car\n  Pet")
+        print("-" * 70)
+        class_choice = input("==> ")
+        print("=" * 70)
         if class_choice.lower() == "fan":
             return "fan"
         elif class_choice.lower() == "car":
@@ -135,10 +137,8 @@ def class_runner(class_name):
 
 fan_objects_values = []
 fan_objects_names = []
-
 car_objects_values = []
 car_objects_names = []
-
 pet_objects_values = []
 pet_objects_names = []
 
@@ -151,6 +151,8 @@ while run:
         object_name = name_object()
         object_values = class_runner(class_name)
         store_object(class_name, object_name, object_values)
+    elif menu_choice == 2:
+        class_name = class_choice()
         print(objects_dataframe(class_name))
-    if menu_choice == 0:
+    elif menu_choice == 0:
         run = False
