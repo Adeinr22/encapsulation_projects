@@ -38,6 +38,23 @@ def create_object(class_choice):
             except ValueError:
                 print("invalid input. try again")
 
+def name_object():
+    import keyword
+    while True:
+        object_name = input("name this object: ")
+        if object_name == '':
+            print("you did not put any name")
+        elif object_name[0].isnumeric():
+            print("object name must not start with a number.")
+        elif keyword.iskeyword(object_name):
+            print("object name must not be a python reserved keyword")
+        elif " " in object_name:
+            print("object name must not have spaces")
+        elif not object_name.isalnum():
+            print("object name must not have speacial characters")
+        else:
+            return object_name
+
 def menu():
     menu = input("""
     Pick action:
@@ -75,7 +92,8 @@ run = True
 while run:
     menu_choice = menu()
     if menu_choice == 1:
-        object = menu_choice_1()
-        print(object)
+        object_values = menu_choice_1()
+        object_name = name_object()
+        print(object_name)
     if menu_choice == 0:
         run = False
