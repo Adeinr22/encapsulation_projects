@@ -68,7 +68,7 @@ def store_object(class_name, object_name, values):
         fan_objects_values.append(fan_values)
         fan_objects_names.append(object_name)
     elif class_name.lower() == "car":
-        car_values = {"YEAR-MODEL": values[0], "MAKE": values[1]}
+        car_values = {"YEAR-MODEL": values[0], "MAKE": values[1], "SPEED": 0}
         car_objects_values.append(car_values)
         car_objects_names.append(object_name)
     elif class_name.lower() == "pet":
@@ -81,33 +81,145 @@ def objects_dataframe(class_name):
     if class_name.lower() == "fan":
         fan_dataframe = pd.DataFrame(fan_objects_values)
         fan_dataframe.index = fan_objects_names
+        fan_dataframe.index.name = 'object'
         return fan_dataframe
     elif class_name.lower() == "car":
         car_dataframe = pd.DataFrame(car_objects_values)
         car_dataframe.index = car_objects_names
+        car_dataframe.index.name = 'object'
         return car_dataframe
     elif class_name.lower() == "pet":
         pet_dataframe = pd.DataFrame(pet_objects_values)
         pet_dataframe.index = pet_objects_names
+        pet_dataframe.index.name = 'object'
         return pet_dataframe
 
+def get_object(class_name, object_name):
+    if class_name.lower() == "fan":
+        fan_dataframe = pd.DataFrame(fan_objects_values)
+        fan_dataframe.index = fan_objects_names
+        fan_dataframe.index.name = 'object'
+        return fan_dataframe.loc[object_name]
+    elif class_name.lower() == "car":
+        car_dataframe = pd.DataFrame(car_objects_values)
+        car_dataframe.index = car_objects_names
+        car_dataframe.index.name = 'object'
+        return car_dataframe.loc[object_name]
+    elif class_name.lower() == "pet":
+        pet_dataframe = pd.DataFrame(pet_objects_values)
+        pet_dataframe.index = pet_objects_names
+        pet_dataframe.index.name = 'object'
+        return pet_dataframe.loc[object_name]
+    
+def modify_object(class_name, object_name):
+    if class_name.lower() == "fan":
+        while True:
+            print("what would you like to modify in this object?")
+            print(" (1) speed\n (2) radius\n (3) color\n (4) on\n (Q) Cancel")
+            modify_choice = input("==> ")
+            print("=" * 70)
+            if modify_choice == "1":
+                change_to = input("set speed to: (SLOW) (MEDIUM) (FAST) -> ")
+                object_index = fan_objects_names.index(object_name)
+                values = fan_objects_values[object_index]
+                if change_to.lower() == 'slow':
+                    values['SPEED'] = 1
+                elif change_to.lower() == 'medium':
+                    values['SPEED'] = 2
+                elif change_to.lower() == 'fast':
+                    values['SPEED'] = 3
+            elif modify_choice == "2":
+                change_to = input("set radius to: ")
+                object_index = fan_objects_names.index(object_name)
+                values = fan_objects_values[object_index]
+                if change_to.isnumeric():
+                    values['RADIUS'] = change_to
+            elif modify_choice == "3":
+                change_to = input("set color to: ")
+                object_index = fan_objects_names.index(object_name)
+                values = fan_objects_values[object_index]
+                if change_to.isalpha():
+                    values['COLOR'] = change_to
+            elif modify_choice == "4":
+                change_to = input("set on status to: (True) (FALSE) -> ")
+                object_index = fan_objects_names.index(object_name)
+                values = fan_objects_values[object_index]
+                if change_to == ("True" or "False"):
+                    values['ON'] = bool(change_to)
+            elif modify_choice.lower() == "q":
+                break
+            else:
+                print("Invalid input. try again")
+    elif class_name.lower() == "car":
+        while True:
+            print("what would you like to modify in this object?")
+            print(" (1) year model\n (2) make\n (3) accelerate\n (4) break\n (Q) Cancel")
+            modify_choice = input("==> ")
+            print("=" * 70)
+            if modify_choice == "1":
+                change_to = input("set year model to: ")
+                object_index = car_objects_names.index(object_name)
+                values = car_objects_values[object_index]
+                values['YEAR-MODEL'] = change_to
+            elif modify_choice == "2":
+                change_to = input("set make to: ")
+                object_index = car_objects_names.index(object_name)
+                values = car_objects_values[object_index]
+                values['MAKE'] = change_to
+            elif modify_choice == "3":
+                object_index = car_objects_names.index(object_name)
+                values = car_objects_values[object_index]
+                values['SPEED'] += 5
+            elif modify_choice == "4":
+                object_index = car_objects_names.index(object_name)
+                values = car_objects_values[object_index]
+                if values['SPEED'] != 0:
+                    values['SPEED'] -= 5
+            elif modify_choice.lower() == "q":
+                break
+            else:
+                print("Invalid input. try again")
+    elif class_name.lower() == "pet":
+        while True:
+            print("what would you like to modify in this object?")
+            print(" (1) name\n (2) animal type\n (3) age\n (Q) Cancel")
+            modify_choice = input("==> ")
+            print("=" * 70)
+            if modify_choice == "1":
+                change_to = input("set name to: ")
+                object_index = pet_objects_names.index(object_name)
+                values = pet_objects_values[object_index]
+                values['NAME'] = change_to
+            elif modify_choice == "2":
+                change_to = input("set animal type to: ")
+                object_index = pet_objects_names.index(object_name)
+                values = pet_objects_values[object_index]
+                values['ANIMAL-TYPE'] = change_to
+            elif modify_choice == "3":
+                change_to = input("set age to: ")
+                object_index = pet_objects_names.index(object_name)
+                values = pet_objects_values[object_index]
+                if change_to.isnumeric():
+                    if not (int(change_to) < 0):
+                        values['AGE'] = change_to
+            elif modify_choice.lower() == "q":
+                break
+            else:
+                print("Invalid input. try again")
+    
 def menu():
     print("=" * 70)
     print("Pick action: ")
     print("  (1) Create object")
     print("  (2) Display all objects")
+    print("  (3) Display an object")
+    print("  (4) Modify an object")
     print("  (0) Quit")
     print("-" * 70)
     menu = input("==> ")
     print("=" * 70)
-    if menu == "1":
-        return 1
-    elif menu == "2":
-        return 2
-    elif menu == "0":
-        return 0
-    else:
-        pass
+    if menu.isdigit():
+        return int(menu)
 
 def class_choice():
     while True:
@@ -154,5 +266,20 @@ while run:
     elif menu_choice == 2:
         class_name = class_choice()
         print(objects_dataframe(class_name))
+    elif menu_choice == 3:
+        class_name = class_choice()
+        object_name = input("name of the object: ")
+        try:
+            print(get_object(class_name, object_name))
+        except:
+            print(f"object '{object_name}' doesn't exist!")
+    elif menu_choice == 4:
+        class_name = class_choice()
+        object_name = input("name of the object: ")
+        try:
+            object_values = get_object(class_name, object_name)
+            modify_object(class_name, object_name)
+        except:
+            print(f"object '{object_name}' doesn't exist!")
     elif menu_choice == 0:
         run = False
