@@ -144,8 +144,10 @@ def modify_object(class_name, object_name):
                 change_to = input("set on status to: (True) (FALSE) -> ")
                 object_index = fan_objects_names.index(object_name)
                 values = fan_objects_values[object_index]
-                if change_to == ("True" or "False"):
-                    values['ON'] = bool(change_to)
+                if change_to.lower == "true":
+                    values['ON'] = True
+                elif change_to.lower == "false":
+                    values['ON'] = False
             elif modify_choice.lower() == "q":
                 break
             else:
@@ -214,6 +216,7 @@ def menu():
     print("  (2) Display all objects")
     print("  (3) Display an object")
     print("  (4) Modify an object")
+    print("  (5) Turn dataframe to csv file")
     print("  (0) Quit")
     print("-" * 70)
     menu = input("==> ")
@@ -246,6 +249,14 @@ def class_runner(class_name):
         return create_object("pet")
     else:
         print(f"no class named '{class_choice}'")
+
+def to_csv_file(class_name, dataframe):
+    if class_name.lower() == "fan":
+        dataframe.to_csv('fan_objects.csv', index=True, index_label='object_name')
+    elif class_name.lower() == "car":
+        dataframe.to_csv('car_objects.csv', index=True, index_label='object_name')
+    elif class_name.lower() == "pet":
+        dataframe.to_csv('pet_objects.csv', index=True, index_label='object_name')
 
 fan_objects_values = []
 fan_objects_names = []
@@ -281,5 +292,9 @@ while run:
             modify_object(class_name, object_name)
         except:
             print(f"object '{object_name}' doesn't exist!")
+    elif menu_choice == 5:
+        class_name = class_choice()
+        class_dataframe = objects_dataframe(class_name)
+        to_csv_file(class_name, class_dataframe)
     elif menu_choice == 0:
         run = False
