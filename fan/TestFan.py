@@ -16,6 +16,20 @@ fan_2.set_radius(5)
 fan_2.set_color("blue")
 fan_2.set_on(False)
 
+# fan_1 displaying values
+print(fan_1.get_speed())
+print(fan_1.get_radius())
+print(fan_1.get_color())
+print(fan_1.get_on())
+print("-"*100)
+
+# fan_2 displaying values
+print(fan_2.get_speed())
+print(fan_2.get_radius())
+print(fan_2.get_color())
+print(fan_2.get_on())
+print("-"*100)
+
 # Comparison
 print(f"""
 {"="*100}
