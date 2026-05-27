@@ -8,6 +8,14 @@ def create_object(class_choice):
         while True:
             try:
                 speed: str = input("pick fan speed: | (SLOW) (MEDIUM) (FAST) | -> ")
+                if speed.lower() == 'slow':
+                    speed = 1
+                elif speed.lower() == 'medium':
+                    speed = 2
+                elif speed.lower() == 'fast':
+                    speed = 3
+                else:
+                    print("Invalid input. Will set speed to default")
                 radius: float = float(input("input the radius of the fan: "))
                 color: str = input("input the color of the fan: ")
                 on: str = input("turn on the fan? Yes/No | ")
